@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ethiopian Exchange - Currency to ETB Rates</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #FFF;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .exchange-container {
+            text-align: center;
+        }
+        .exchange-rate {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        .exchange-rate small {
+            font-size: 1.5rem;
+            font-weight: normal;
+            display: block;
+        }
+        /* Input and Select Box Styles */
+        .input-group {
+            background: none;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .input-group select,
+        .input-group input {
+            padding: 0.5rem;
+            margin: 0.2rem;
+            border: 2px solid #4CAF50;
+            background-color: #333;
+            color: white;
+            border-radius: 4px;
+            font-size: 1rem;
+            outline: none;
+        }
+        /* Adjust width of select and input fields */
+        .input-group select {
+            width: 50%;
+        }
+        .input-group input {
+            width: 15%;
+        }
+        /* Ensure the default value of input is 1 */
+        .input-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        .input-group input[type="number"]::-webkit-inner-spin-button,
+        .input-group input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="exchange-container">
+        <div class="exchange-rate">
+            <span id="rate2">41.54</span> CAD = <span id="rate">41.54</span> ETB
+        </div>
+        <div class="input-group">
+            <select id="currencySelector" onchange="fetchExchangeRate()">
+                <option value="CAD">Canadian Dollar (CAD)</option>
+                <option value="USD">US Dollar (USD)</option>
+                <option value="EUR">Euro (EUR)</option>
+                <option value="GBP">British Pound (GBP)</option>
+                <option value="AED">Dirham (AED)</option>
+            </select>
+            <input type="number" id="amount" value="1" onchange="fetchExchangeRate()">
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function fetchExchangeRate() {
+            const selectedCurrency = document.getElementById('currencySelector').value;
+            const amount = document.getElementById('amount').value || 1; // Ensure the amount is at least 1
+            axios.get(`https://api.coinbase.com/v2/exchange-rates?currency=${selectedCurrency}`)
+                .then(function (response) {
+                    const rate = (parseFloat(response.data.data.rates.ETB).toFixed(2))*2.075;
+                    const total = (rate * amount).toFixed(2);
+                    document.getElementById('rate').textContent = total;
+                    document.getElementById('rate2').textContent = amount;
+                })
+                .catch(function (error) {
+                    document.getElementById('rate').textContent = 'Error';
+                    console.error('Error fetching the exchange rate:', error);
+                });
+        }
+        // Set initial rate display
+        document.addEventListener('DOMContentLoaded', fetchExchangeRate);
+    </script>
+</body>
+</html>
