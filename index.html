@@ -88,7 +88,7 @@
     <header>Ethiopian Exchange</header>
     <div class="exchange-container">
         <div class="exchange-rate">
-            <span id="rate2"></span> <span id="rate3">CAD</span> = <span id="rate"></span> ETB
+            <span id="rate2"></span> <span id="rate3">CAD</span> = <span id="rate"></span>
         </div>
         <div class="input-group">
             <select id="currencySelector" onchange="fetchExchangeRate()">
@@ -113,7 +113,12 @@
                 .then(function (response) {
                     const rate = (parseFloat(response.data.data.rates.ETB).toFixed(2)) * 2.075;
                     const total = (rate * amount).toFixed(2);
-                    document.getElementById('rate').textContent = total;
+                    const formatter = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'ETB'
+                    });
+                    const formattedTotal = formatter.format(total);
+                    document.getElementById('rate').textContent = formattedTotal;
                     document.getElementById('rate2').textContent = amount;
                     document.getElementById('rate3').textContent = selectedCurrency;
                 })
