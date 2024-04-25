@@ -13,14 +13,26 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column; /* Change to column for better mobile layout */
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #FFF;
+            color: #000;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 999;
         }
         .exchange-container {
             text-align: center;
             width: 90%; /* Use percentage for responsive width */
+            margin-top: 60px; /* Adjusted to account for the fixed header */
+            margin-bottom: 20px; /* Added for spacing */
         }
         .exchange-rate {
             font-size: 2rem; /* Smaller base font size for mobile */
@@ -48,7 +60,7 @@
             color: white;
             border-radius: 4px;
             font-size: 1rem;
-            width: 100%; /* Full width for better mobile usability */
+            width: 90%; /* Full width for better mobile usability */
             box-sizing: border-box; /* Include padding and border in the width */
             outline: none;
         }
@@ -62,7 +74,8 @@
             }
             .input-group {
                 flex-direction: row; /* Align side by side on larger screens */
-                justify-content: space-around;
+                justify-content: center;
+                align-items: center;
             }
             .input-group select,
             .input-group input {
@@ -72,9 +85,10 @@
     </style>
 </head>
 <body>
+    <header>Ethiopian Exchange</header>
     <div class="exchange-container">
         <div class="exchange-rate">
-            <span id="rate2">41.54</span> CAD = <span id="rate">41.54</span> ETB
+            <span id="rate2">41.54</span> <span id="rate3">CAD</span> = <span id="rate">41.54</span> ETB
         </div>
         <div class="input-group">
             <select id="currencySelector" onchange="fetchExchangeRate()">
@@ -98,6 +112,7 @@
                     const total = (rate * amount).toFixed(2);
                     document.getElementById('rate').textContent = total;
                     document.getElementById('rate2').textContent = amount;
+                    document.getElementById('rate3').textContent = selectedCurrency;
                 })
                 .catch(function (error) {
                     document.getElementById('rate').textContent = 'Error';
