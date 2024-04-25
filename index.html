@@ -88,7 +88,7 @@
     <header>Ethiopian Exchange</header>
     <div class="exchange-container">
         <div class="exchange-rate">
-            <span id="rate2">41.54</span> <span id="rate3">CAD</span> = <span id="rate">41.54</span> ETB
+            <span id="rate2"></span> <span id="rate3">CAD</span> = <span id="rate"></span> ETB
         </div>
         <div class="input-group">
             <select id="currencySelector" onchange="fetchExchangeRate()">
@@ -97,6 +97,9 @@
                 <option value="EUR">Euro (EUR)</option>
                 <option value="GBP">British Pound (GBP)</option>
                 <option value="AED">Dirham (AED)</option>
+                <option value="SAR">Saudi Riyal (SAR)</option>
+                <option value="LBP">Beirut (LBP)</option>
+                <option value="CNY">Chinese Yuan (CNY)</option>
             </select>
             <input type="number" id="amount" value="1" onchange="fetchExchangeRate()">
         </div>
